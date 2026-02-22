@@ -42,14 +42,25 @@ export default class Page {
  }
 
  render() {
-  this.host.innerHTML = ""; // Clear existing content
-  const fragment = document.createDocumentFragment();
+  if (!document.startViewTransition) {
+   this.host.innerHTML = ""; // Clear existing content
+   const fragment = document.createDocumentFragment();
 
-  // Build and add the page content
-  const pageContent = this.builder(this.pageData);
-  fragment.appendChild(pageContent);
+   const pageContent = this.builder(this.pageData);
+   fragment.appendChild(pageContent);
 
-  // One single paint to the screen
-  this.host.appendChild(fragment);
+   this.host.appendChild(fragment);
+   return;
+  }
+
+  document.startViewTransition(() => {
+   this.host.innerHTML = ""; // Clear existing content
+   const fragment = document.createDocumentFragment();
+
+   const pageContent = this.builder(this.pageData);
+   fragment.appendChild(pageContent);
+
+   this.host.appendChild(fragment);
+  });
  }
 }
