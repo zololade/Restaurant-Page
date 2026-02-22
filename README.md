@@ -72,3 +72,4 @@ npm run build
 ## 📜 Reflections
 
 This project was a deep dive into the power of the DOM API. By choosing to build a generic `builder` function instead of manual string literals, I learned how to handle recursion and mixed-content arrays to create flexible code that mimics the behavior of modern UI frameworks like React or Mithril.js.
+live demo: <https://zololade.github.io/Restaurant-Page/>
