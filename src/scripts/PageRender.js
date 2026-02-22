@@ -28,10 +28,31 @@ buttons.forEach((el) => {
  el.addEventListener("click", (e) => {
   updateNav(e.target);
   let eventOwner = e.target.dataset.page;
-  instances[eventOwner].render();
+
+  if (document.startViewTransition) {
+   document.startViewTransition(() => {
+    instances[eventOwner].render();
+   });
+  } else {
+   instances[eventOwner].render();
+  }
  });
 });
 
 // 4. Initial Load
-instances.home.render();
-footer.render();
+
+// A "Batch" render function
+function initialLoad() {
+ if (document.startViewTransition) {
+  document.startViewTransition(() => {
+   // Both renders happen inside the same "snapshot"
+   instances.home.render();
+   footer.render();
+  });
+ } else {
+  instances.home.render();
+  footerInstance.render();
+ }
+}
+
+initialLoad();
