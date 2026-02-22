@@ -56,3 +56,7 @@ function initialLoad() {
 }
 
 initialLoad();
+// Once everything is loaded and rendered, show the body
+window.addEventListener("load", () => {
+ document.body.style.opacity = "1";
+});
