@@ -3,12 +3,3 @@
  margin: 0;
  box-sizing: border-box;
 }
-img {
- display: block;
- height: auto;
- width: 100%;
-}
-body {
- max-width: min(800px, 80%);
- margin: auto;
-}
