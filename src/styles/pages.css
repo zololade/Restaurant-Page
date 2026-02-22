@@ -17,6 +17,7 @@ main#content {
 
 /* Navigation Styling */
 header:has(nav) {
+ text-align: center;
  background: white;
  padding: 1rem 0;
  border-bottom: 1px solid #eee;
@@ -65,7 +66,7 @@ img {
 }
 
 /* Headers & Typography */
-header {
+header:not(header:has(nav)) {
  text-align: center;
  margin-bottom: 4rem;
 }
