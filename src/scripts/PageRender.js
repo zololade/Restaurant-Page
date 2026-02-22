@@ -7,9 +7,9 @@ import hero from "../assets/sandwish.png";
 const host = document.getElementById("content");
 
 // 1. Create your Page instances
-const home = new Page(host, hero, homeData);
-const contact = new Page(host, "contact.jpg", contactData);
-const about = new Page(host, "about.jpg", aboutData);
+const home = new Page(host, homeData, hero);
+const contact = new Page(host, contactData);
+const about = new Page(host, aboutData);
 
 // 2. Select your buttons
 const [homeBtn, contactBtn, aboutBtn] = document.querySelectorAll("nav button");

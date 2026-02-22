@@ -3,10 +3,10 @@ function isObject(value) {
 }
 
 export default class Page {
- constructor(host, headerImage, pageData) {
+ constructor(host, pageData, headerImage) {
   this.host = host;
-  this.headerImage = headerImage;
   this.pageData = pageData;
+  this.headerImage = headerImage;
  }
 
  // Your Masterpiece
@@ -47,9 +47,11 @@ export default class Page {
   const fragment = document.createDocumentFragment();
 
   // Add the header image
-  const img = document.createElement("img");
-  img.src = this.headerImage;
-  fragment.appendChild(img);
+  if (this.headerImage) {
+   const img = document.createElement("img");
+   img.src = this.headerImage;
+   fragment.appendChild(img);
+  }
 
   // Build and add the page content
   const pageContent = this.builder(this.pageData);
