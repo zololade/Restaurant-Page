@@ -2,12 +2,11 @@ import Page from "./Page.js";
 import homeData from "./pages/home.js";
 import contactData from "./pages/contact.js";
 import aboutData from "./pages/about.js";
-import hero from "../assets/sandwich.png";
 
 const host = document.getElementById("content");
 
 // 1. Create your Page instances
-const home = new Page(host, homeData, hero);
+const home = new Page(host, homeData);
 const contact = new Page(host, contactData);
 const about = new Page(host, aboutData);
 

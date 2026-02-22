@@ -1,8 +1,7 @@
 export default class Page {
- constructor(host, pageData, headerImage) {
+ constructor(host, pageData) {
   this.host = host;
   this.pageData = pageData;
-  this.headerImage = headerImage;
  }
 
  static isObject(value) {
@@ -45,13 +44,6 @@ export default class Page {
  render() {
   this.host.innerHTML = ""; // Clear existing content
   const fragment = document.createDocumentFragment();
-
-  // Add the header image
-  if (this.headerImage) {
-   const img = document.createElement("img");
-   img.src = this.headerImage;
-   fragment.appendChild(img);
-  }
 
   // Build and add the page content
   const pageContent = this.builder(this.pageData);

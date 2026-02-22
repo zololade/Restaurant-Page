@@ -1,4 +1,12 @@
+import hero from "../../assets/coffee.png";
+
 const pageData = [
+ {
+  tag: "img",
+  src: hero,
+  width: "3840",
+  height: "1600",
+ },
  {
   tag: "header",
   content: [
