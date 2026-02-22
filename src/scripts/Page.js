@@ -1,7 +1,3 @@
-function isObject(value) {
- return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
 export default class Page {
  constructor(host, pageData, headerImage) {
   this.host = host;
@@ -9,10 +5,14 @@ export default class Page {
   this.headerImage = headerImage;
  }
 
+ static isObject(value) {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+ }
+
  // Your Masterpiece
  builder(incomingObject) {
   let tag, content, el, att;
-  if (isObject(incomingObject)) {
+  if (Page.isObject(incomingObject)) {
    ({ tag, content, ...att } = incomingObject);
    el = document.createElement(tag);
 
