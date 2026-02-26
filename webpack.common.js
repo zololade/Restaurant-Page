@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 const __dirname = import.meta.dirname;
 
 export default {
- entry: "./src/index.js",
+ entry: "./src/index.ts",
  output: {
   filename: "main.js",
   path: path.resolve(__dirname, "dist"),
