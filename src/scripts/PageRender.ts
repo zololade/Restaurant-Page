@@ -1,62 +1,70 @@
-import Page from "./Page.js";
-import homeData from "./pages/home.js";
-import contactData from "./pages/contact.js";
-import aboutData from "./pages/about.js";
-import { footerData } from "./pages/footer.js";
-import { menuData } from "./pages/menu.js";
+import Page, { type PageData } from "./Page";
+import homeData from "./pages/home";
+import contactData from "./pages/contact";
+import aboutData from "./pages/about";
+import { footerData } from "./pages/footer";
+import { menuData } from "./pages/menu";
 
-const host = document.getElementById("content");
-// Create a host for the footer
-const footerHost = document.querySelector(".footer-container");
-const footer = new Page(footerHost, footerData);
-// 1. Create Page instances
-const instances = {
- home: new Page(host, homeData),
- contact: new Page(host, contactData),
- about: new Page(host, aboutData),
- menu: new Page(host, menuData),
+// Define the valid keys
+type PageKey = "home" | "contact" | "about" | "menu";
+
+const host = document.getElementById("content") as HTMLElement;
+const footerHost = document.querySelector(".footer-container") as HTMLElement;
+
+// Use the exported PageData type for the footer
+const footer = new Page(footerHost, footerData as PageData);
+
+// 1. Explicitly type the instances object
+const instances: Record<PageKey, Page> = {
+ home: new Page(host, homeData as PageData),
+ contact: new Page(host, contactData as PageData),
+ about: new Page(host, aboutData as PageData),
+ menu: new Page(host, menuData as PageData),
 };
-const buttons = document.querySelectorAll("nav button");
 
-// routing logic
-function updateNav(clickedBtn) {
+const buttons = document.querySelectorAll<HTMLButtonElement>("nav button");
+
+function updateNav(clickedBtn: HTMLButtonElement): void {
  buttons.forEach((btn) => btn.classList.remove("active"));
  clickedBtn.classList.add("active");
 }
 
 buttons.forEach((el) => {
- el.addEventListener("click", (e) => {
-  updateNav(e.target);
-  let eventOwner = e.target.dataset.page;
+ el.addEventListener("click", (e: MouseEvent) => {
+  const target = e.currentTarget as HTMLButtonElement;
+  const pageName = target.dataset.page as PageKey;
 
-  if (document.startViewTransition) {
-   document.startViewTransition(() => {
-    instances[eventOwner].render();
-   });
-  } else {
-   instances[eventOwner].render();
+  // Safety check: Ensure the clicked button's data-page exists in our instances
+  if (pageName in instances) {
+   updateNav(target);
+
+   const transition = () => instances[pageName].render();
+
+   if (document.startViewTransition) {
+    document.startViewTransition(transition);
+   } else {
+    transition();
+   }
   }
  });
 });
 
-// 4. Initial Load
-
-// A "Batch" render function
-function initialLoad() {
- if (document.startViewTransition) {
-  document.startViewTransition(() => {
-   // Both renders happen inside the same "snapshot"
-   instances.home.render();
-   footer.render();
-  });
- } else {
+function initialLoad(): void {
+ const renderAll = () => {
+  // TypeScript is happy now because 'home' is a required key of PageKey
   instances.home.render();
-  footerInstance.render();
+  footer.render();
+ };
+
+ if (document.startViewTransition) {
+  document.startViewTransition(renderAll);
+ } else {
+  renderAll();
  }
 }
 
 initialLoad();
-// Once everything is loaded and rendered, show the body
+
 window.addEventListener("load", () => {
  document.body.style.opacity = "1";
 });
