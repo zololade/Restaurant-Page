@@ -1,6 +1,6 @@
 import hero from "../../assets/coffee.png";
 
-const pageData = [
+const HomeData = [
  {
   tag: "img",
   src: hero,
@@ -97,4 +97,5 @@ const pageData = [
  },
 ];
 
-export default pageData;
+const destination = "main";
+export { HomeData, destination };

@@ -1,4 +1,4 @@
-export const footerData = {
+const FooterData = {
  tag: "footer",
  class: "site-footer",
  content: [
@@ -38,3 +38,7 @@ export const footerData = {
   },
  ],
 };
+
+const destination = "footer";
+
+export { FooterData, destination };
