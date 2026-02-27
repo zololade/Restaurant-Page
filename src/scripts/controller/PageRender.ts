@@ -1,9 +1,9 @@
-import Page, { type PageData } from "./Page";
-import homeData from "./pages/home";
-import contactData from "./pages/contact";
-import aboutData from "./pages/about";
-import { footerData } from "./pages/footer";
-import { menuData } from "./pages/menu";
+import Page, { type PageData } from "../view/Page";
+import homeData from "../model/home";
+import contactData from "../model/contact";
+import aboutData from "../model/about";
+import { footerData } from "../model/footer";
+import { menuData } from "../model/menu";
 
 // Define the valid keys
 type PageKey = "home" | "contact" | "about" | "menu";
