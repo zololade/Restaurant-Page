@@ -8,11 +8,9 @@ export type ElementObject = {
 export type PageData = ElementObject | PageData[] | string | number;
 
 export default class Page {
- private host: HTMLElement;
  private pageData: PageData;
 
- constructor(host: HTMLElement, pageData: PageData) {
-  this.host = host;
+ constructor(pageData: PageData) {
   this.pageData = pageData;
  }
 
@@ -20,7 +18,9 @@ export default class Page {
   return typeof value === "object" && value !== null && !Array.isArray(value);
  }
 
- builder(incomingObject: PageData): HTMLElement | DocumentFragment | Text {
+ private builder(
+  incomingObject: PageData,
+ ): HTMLElement | DocumentFragment | Text {
   let tag: string;
   let content: string | PageData[] | undefined;
   let el: HTMLElement | DocumentFragment;
@@ -56,11 +56,26 @@ export default class Page {
   return el;
  }
 
- render(): void {
-  this.host.innerHTML = "";
+ get resultingElement() {
   const fragment = document.createDocumentFragment();
   const pageContent = this.builder(this.pageData);
   fragment.appendChild(pageContent);
-  this.host.appendChild(fragment);
+
+  return fragment;
+ }
+
+ get pageDataObj() {
+  return this.pageData;
+ }
+
+ get builderMethod() {
+  return this.builder;
+ }
+
+ static render(host: HTMLElement, elem: HTMLElement | DocumentFragment): void {
+  host.innerHTML = "";
+  const fragment = document.createDocumentFragment();
+  fragment.appendChild(elem);
+  host.appendChild(fragment);
  }
 }

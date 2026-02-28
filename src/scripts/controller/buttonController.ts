@@ -10,7 +10,8 @@ buttons.forEach((button) => {
  button.addEventListener("click", (e) => {
   let eventOwner = e.target as HTMLButtonElement;
   updateClickedButton(eventOwner);
-  let target = document.querySelector("#main");
-  if (target) (target as HTMLElement).setAttribute("data-state", "false");
+  console.log(eventOwner.dataset.page);
+  let target = document.querySelector(`[data-id=${eventOwner.dataset.page}]`);
+  if (target) (target as HTMLElement).setAttribute("data-state", "inview");
  });
 });

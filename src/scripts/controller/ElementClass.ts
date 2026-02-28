@@ -1,6 +1,4 @@
-export function observeState(elementName: string) {
- const element = document.getElementById(elementName);
-
+export function observeState(element: HTMLElement) {
  if (!element) return;
 
  const observer = new MutationObserver((mutations) => {
