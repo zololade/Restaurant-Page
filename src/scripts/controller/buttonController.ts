@@ -1,4 +1,6 @@
-// const pageStateManager = new CustomEvent("stateManger");
+import { renderView } from "./PageRender";
+import { viewMap } from "./PageRender";
+
 const buttons = document.querySelectorAll<HTMLButtonElement>("nav button");
 
 function updateClickedButton(clickedBtn: HTMLButtonElement): void {
@@ -6,12 +8,19 @@ function updateClickedButton(clickedBtn: HTMLButtonElement): void {
  clickedBtn.classList.add("active");
 }
 
+function isValidView(value: string | undefined): value is keyof typeof viewMap {
+ return value !== undefined && value in viewMap;
+}
+
 buttons.forEach((button) => {
  button.addEventListener("click", (e) => {
   let eventOwner = e.target as HTMLButtonElement;
   updateClickedButton(eventOwner);
-  console.log(eventOwner.dataset.page);
-  let target = document.querySelector(`[data-id=${eventOwner.dataset.page}]`);
-  if (target) (target as HTMLElement).setAttribute("data-state", "inview");
+  // dataset that stores what the clicked button wants in view
+  const view = eventOwner.dataset.page;
+
+  if (isValidView(view)) {
+   renderView(view);
+  }
  });
 });

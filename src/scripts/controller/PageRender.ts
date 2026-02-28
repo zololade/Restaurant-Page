@@ -1,27 +1,41 @@
 import Page, { type PageData } from "../view/Page";
-import { HomeData, route as homeRoute } from "../model/home";
-import { FooterData, route as footerRoute } from "../model/footer";
-import { observeState } from "./ElementClass";
+import { HomeData } from "../model/home";
+import { FooterData } from "../model/footer";
+import aboutPageData from "../model/about";
+import { menuData } from "../model/menu";
+import contactPageData from "../model/contact";
 
+export const viewMap = {
+ home: HomeData,
+ about: aboutPageData,
+ menu: menuData,
+ contact: contactPageData,
+} as const;
+
+const mainContainer = document.getElementById("main");
+const footerContainer = document.getElementById("footer");
+let currentView: keyof typeof viewMap | null = null;
 // a that builds page instance and render the page based on its available data
-function contentDisplayer(hostName: string, route: string, pageData: PageData) {
- const host = document.getElementById(hostName) as HTMLElement;
- let observer = observeState(document.createElement("div"));
-
- if (!observer) return;
- observer.setAttribute("data-state", "");
- observer.setAttribute("data-id", route);
- //create instance
- let currentPage = new Page(pageData);
- observer?.appendChild(currentPage.resultingElement);
+function contentDisplayer(host: HTMLElement, pageData: PageData) {
  if (!host) return;
- if (!document.startViewTransition) {
-  Page.render(host, observer);
-  return;
- }
-
- document.startViewTransition(() => Page.render(host, observer));
+ const render = () => {
+  const fragment = Page.build(pageData);
+  Page.render(host, fragment);
+ };
+ document.startViewTransition ? document.startViewTransition(render) : render();
 }
 
-contentDisplayer("main", homeRoute, HomeData);
-contentDisplayer("footer", footerRoute, FooterData);
+export function renderView(view: keyof typeof viewMap) {
+ if (currentView === view) return;
+ currentView = view;
+ if (!mainContainer) return;
+ contentDisplayer(mainContainer, viewMap[view]);
+}
+
+function initialLoad() {
+ if (!mainContainer || !footerContainer) return;
+ renderView("home");
+ contentDisplayer(footerContainer, FooterData);
+}
+
+initialLoad();

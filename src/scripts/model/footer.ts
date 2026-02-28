@@ -39,6 +39,4 @@ const FooterData = {
  ],
 };
 
-const route = "footer";
-
-export { FooterData, route };
+export { FooterData };

@@ -97,5 +97,4 @@ const HomeData = [
  },
 ];
 
-const route = "home";
-export { HomeData, route };
+export { HomeData };
